@@ -1,12 +1,20 @@
 variable "aws_region" {
-  type        = string
-  description = "AWS region to use"
-  default     = "us-east-1"
+  type    = string
+  default = "us-east-1"
+}
+
+variable "project_name" {
+  type    = string
+  default = "pizzacold"
+}
+
+variable "stage" {
+  type    = string
+  default = "dev"
 }
 
 variable "labrole_arn" {
-  type        = string
-  description = "ARN of the LabRole to assume for lambda functions and similar"
+  type = string
 }
 
 variable "domain" {
