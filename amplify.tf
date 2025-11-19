@@ -12,11 +12,25 @@ resource "aws_amplify_app" "frontend" {
     VITE_PUBLIC_URL    = "https://${var.subdomain}.${var.domain}"
   }
 
-  custom_rule {
-    source = "</^[^.]+$|\\.(?!(css|gif|ico|jpg|jpeg|js|png|mov|webm|webmanifest|txt|svg|woff|woff2|ttf|map|json|webp)$)([^.]+$)/>"
-    target = "/index.html"
-    status = "200"
-  }
+  build_spec = <<-EOT
+    version: 1
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - "corepack enable pnpm"
+            - "pnpm install"
+        build:
+          commands:
+            - "pnpm run build"
+      artifacts:
+        baseDirectory: "out"
+        files:
+          - "**/*"
+      cache:
+        paths:
+          - "node_modules/**/*"
+  EOT
 }
 
 resource "aws_amplify_branch" "main" {

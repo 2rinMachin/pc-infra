@@ -5,3 +5,7 @@ output "sfn_orders_state_machine" {
 output "acm_certificate_arn" {
   value = aws_acm_certificate.main.arn
 }
+
+output "amplify_dns_records" {
+  value = [for sub_domain in aws_amplify_domain_association.domain.sub_domain : sub_domain.dns_record]
+}
