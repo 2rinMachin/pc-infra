@@ -1,11 +1,29 @@
-resource "aws_dynamodb_table" "restaurants" {
-  name         = "${var.project_name}-${var.stage}-restaurants"
+resource "aws_dynamodb_table" "tenants" {
+  name         = "${var.project_name}-${var.stage}-tenants"
   billing_mode = "PAY_PER_REQUEST"
 
   hash_key = "tenant_id"
 
   attribute {
     name = "tenant_id"
+    type = "S"
+  }
+}
+
+resource "aws_dynamodb_table" "products" {
+  name         = "${var.project_name}-${var.stage}-products"
+  billing_mode = "PAY_PER_REQUEST"
+
+  hash_key  = "tenant_id"
+  range_key = "product_id"
+
+  attribute {
+    name = "tenant_id"
+    type = "S"
+  }
+
+  attribute {
+    name = "product_id"
     type = "S"
   }
 }
