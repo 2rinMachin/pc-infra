@@ -22,6 +22,12 @@ variable "domain" {
   description = "Domain to use for SSL certificates"
 }
 
+variable "subdomain" {
+  type    = string
+  default = "pizzahut"
+}
+
+
 variable "product_images_bucket_name" {
   type    = string
   default = "product-images"

@@ -9,7 +9,7 @@ resource "aws_amplify_app" "frontend" {
     VITE_ORDERS_URL    = var.orders_api_url
     VITE_CATALOG_URL   = var.catalog_api_url
     VITE_WEBSOCKET_URL = var.websocket_url
-    VITE_PUBLIC_URL    = "https://pizzahut.${var.domain}"
+    VITE_PUBLIC_URL    = "https://${var.subdomain}.${var.domain}"
   }
 
   custom_rule {
@@ -29,7 +29,7 @@ resource "aws_amplify_branch" "main" {
 
 resource "aws_amplify_domain_association" "domain" {
   app_id                = aws_amplify_app.frontend.id
-  domain_name           = "pizzahut.${var.domain}"
+  domain_name           = "${var.subdomain}.${var.domain}"
   wait_for_verification = true
 
   certificate_settings {
