@@ -31,6 +31,12 @@ resource "aws_amplify_app" "frontend" {
         paths:
           - "node_modules/**/*"
   EOT
+
+  custom_rule {
+    source = "/<*>"
+    target = "/404.html"
+    status = "404-200"
+  }
 }
 
 resource "aws_amplify_branch" "main" {
