@@ -27,3 +27,7 @@ resource "aws_s3_bucket_policy" "product_images_public" {
     ]
   })
 }
+
+resource "aws_s3_bucket" "ingesta" {
+  bucket = "${var.project_name}-${var.stage}-${var.ingesta_bucket_name}"
+}
