@@ -103,6 +103,66 @@ resource "aws_dynamodb_table" "orders" {
     name = "order_id"
     type = "S"
   }
+
+  attribute {
+    name = "client_id"
+    type = "S"
+  }
+
+  attribute {
+    name = "cook_id"
+    type = "S"
+  }
+
+  attribute {
+    name = "dispatcher_id"
+    type = "S"
+  }
+
+  attribute {
+    name = "driver_id"
+    type = "S"
+  }
+
+  attribute {
+    name = "created_at"
+    type = "S"
+  }
+
+  global_secondary_index {
+    name            = "tenant-client-idx"
+    hash_key        = "tenant_id"
+    range_key       = "client_id"
+    projection_type = "ALL"
+  }
+
+  global_secondary_index {
+    name            = "tenant-cook-idx"
+    hash_key        = "tenant_id"
+    range_key       = "cook_id"
+    projection_type = "ALL"
+  }
+
+  global_secondary_index {
+    name            = "tenant-dispatcher-idx"
+    hash_key        = "tenant_id"
+    range_key       = "dispatcher_id"
+    projection_type = "ALL"
+  }
+
+  global_secondary_index {
+    name            = "tenant-driver-idx"
+    hash_key        = "tenant_id"
+    range_key       = "driver_id"
+    projection_type = "ALL"
+  }
+
+  global_secondary_index {
+    name            = "tenant-created-at-idx"
+    hash_key        = "tenant_id"
+    range_key       = "created_at"
+    projection_type = "ALL"
+  }
 }
 
 resource "aws_dynamodb_table" "order_subscriptions" {
