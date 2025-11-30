@@ -33,6 +33,12 @@ variable "product_images_bucket_name" {
   default = "product-images"
 }
 
+variable "ingesta_bucket_name" {
+  type    = string
+  default = "ingesta"
+}
+
+
 variable "frontend_repo" {
   type    = string
   default = "https://github.com/2rinMachin/pc-front"
@@ -56,6 +62,15 @@ variable "catalog_api_url" {
   type = string
 }
 
+variable "analytics_api_url" {
+  type = string
+}
+
 variable "websocket_url" {
   type = string
+}
+
+variable "export_data_schedule" {
+  type    = string
+  default = "rate(5 minutes)"
 }
