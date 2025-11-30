@@ -2,6 +2,11 @@ data "aws_lambda_function" "put_order_task_token" {
   function_name = "${var.project_name}-orders-${var.stage}-put_order_task_token"
 }
 
+data "aws_lambda_function" "notify_order_arrival" {
+  function_name = "${var.project_name}-orders-${var.stage}-notify_order_arrival"
+}
+
+
 locals {
   order_state_names = [
     "WaitForCook",
@@ -9,8 +14,7 @@ locals {
     "WaitForDispatcher",
     "Dispatching",
     "WaitForDeliverer",
-    "Delivering",
-    "Complete"
+    "Delivering"
   ]
 
   order_states = {
@@ -26,7 +30,7 @@ locals {
           "task_token.$" : "$$.Task.Token"
         }
       }
-      Next = i < length(local.order_state_names) - 1 ? local.order_state_names[i + 1] : "FinalStep"
+      Next = i < length(local.order_state_names) - 1 ? local.order_state_names[i + 1] : "SendArrivalEmail"
     }
   }
 }
@@ -41,9 +45,17 @@ resource "aws_sfn_state_machine" "order_workflow" {
     States = merge(
       local.order_states,
       {
-        FinalStep = {
-          Type = "Pass"
-          End  = true
+        SendArrivalEmail = {
+          Type     = "Task"
+          Resource = "arn:aws:states:::lambda:invoke"
+          Parameters = {
+            FunctionName = data.aws_lambda_function.notify_order_arrival.function_name
+            Payload = {
+              "tenant_id.$" : "$.tenant_id"
+              "order_id.$" : "$.order_id"
+            }
+          }
+          End = true
         }
     })
   })
