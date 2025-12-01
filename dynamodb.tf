@@ -113,9 +113,15 @@ resource "aws_dynamodb_table" "orders" {
   }
 
   attribute {
+    name = "status#created_at"
+    type = "S"
+  }
+
+  attribute {
     name = "created_at"
     type = "S"
   }
+
 
   global_secondary_index {
     name            = "tenant-client-idx"
@@ -142,6 +148,13 @@ resource "aws_dynamodb_table" "orders" {
     name            = "tenant-driver-idx"
     hash_key        = "tenant_id"
     range_key       = "driver_id#created_at"
+    projection_type = "ALL"
+  }
+
+  global_secondary_index {
+    name            = "tenant-status-idx"
+    hash_key        = "tenant_id"
+    range_key       = "status#created_at"
     projection_type = "ALL"
   }
 
