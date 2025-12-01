@@ -22,11 +22,15 @@ variable "domain" {
   description = "Domain to use for SSL certificates"
 }
 
-variable "subdomain" {
+variable "customer_subdomain" {
   type    = string
   default = "pizzahut"
 }
 
+variable "restaurant_subdomain" {
+  type    = string
+  default = "pizzahut-restaurant"
+}
 
 variable "product_images_bucket_name" {
   type    = string
@@ -43,6 +47,12 @@ variable "frontend_repo" {
   type    = string
   default = "https://github.com/2rinMachin/pc-front"
 }
+
+variable "frontend_restaurant_repo" {
+  type    = string
+  default = "https://github.com/2rinMachin/pc-front-restaurant"
+}
+
 
 variable "github_token" {
   type        = string
@@ -66,11 +76,16 @@ variable "analytics_api_url" {
   type = string
 }
 
+variable "frontend_tenant_id" {
+  type    = string
+  default = "pizzahut"
+}
+
 variable "websocket_url" {
   type = string
 }
 
 variable "export_data_schedule" {
   type    = string
-  default = "rate(5 minutes)"
+  default = "rate(1 hour)"
 }
