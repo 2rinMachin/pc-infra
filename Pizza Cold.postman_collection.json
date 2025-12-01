@@ -1,0 +1,805 @@
+{
+	"info": {
+		"_postman_id": "1cd2c8e8-1fd9-4cc5-a4be-167b099f0641",
+		"name": "Pizza Cold",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43480626",
+		"_collection_link": "https://planetary-escape-1391844.postman.co/workspace/Jos%C3%A9-Grayson's-Workspace~c4bc84d3-04dd-4b1c-8d8a-76d19da3f965/collection/43480626-1cd2c8e8-1fd9-4cc5-a4be-167b099f0641?action=share&source=collection_link&creator=43480626"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{usersUrl}}",
+							"host": [
+								"{{usersUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code >= 200 && pm.response.code < 300) {",
+									"    const data = pm.response.json()",
+									"    pm.collectionVariables.set('userId', data.user_id);",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"josedanielgrayson@proton.me\",\n    \"username\": \"jdgt\",\n    \"password\": \"123\",\n    \"role\": \"cook\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{usersUrl}}/{{tenantId}}/auth/register",
+							"host": [
+								"{{usersUrl}}"
+							],
+							"path": [
+								"{{tenantId}}",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Log in",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code >= 200 && pm.response.code < 300) {",
+									"    const data = pm.response.json();",
+									"    pm.collectionVariables.set('sessionToken', data.token);",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"josedanielgrayson@proton.me\",\n    \"password\": \"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{usersUrl}}/{{tenantId}}/auth/login",
+							"host": [
+								"{{usersUrl}}"
+							],
+							"path": [
+								"{{tenantId}}",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Log out",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{usersUrl}}/{{tenantId}}/auth/logout",
+							"host": [
+								"{{usersUrl}}"
+							],
+							"path": [
+								"{{tenantId}}",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get self",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{usersUrl}}/{{tenantId}}/users/self",
+							"host": [
+								"{{usersUrl}}"
+							],
+							"path": [
+								"{{tenantId}}",
+								"users",
+								"self"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{usersUrl}}/{{tenantId}}/users/{{userId}}",
+							"host": [
+								"{{usersUrl}}"
+							],
+							"path": [
+								"{{tenantId}}",
+								"users",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete self",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{usersUrl}}/{{tenantId}}/users/self",
+							"host": [
+								"{{usersUrl}}"
+							],
+							"path": [
+								"{{tenantId}}",
+								"users",
+								"self"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clear cart",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"josedanielgrayson@proton.me\",\n    \"password\": \"123\"\n}"
+						},
+						"url": {
+							"raw": "{{usersUrl}}/{{tenantId}}/users/self/cart",
+							"host": [
+								"{{usersUrl}}"
+							],
+							"path": [
+								"{{tenantId}}",
+								"users",
+								"self",
+								"cart"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Get all orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ordersUrl}}/{{tenantId}}/orders?limit=1",
+							"host": [
+								"{{ordersUrl}}"
+							],
+							"path": [
+								"{{tenantId}}",
+								"orders"
+							],
+							"query": [
+								{
+									"key": "dispatcher_id",
+									"value": "{{userId}}",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "1"
+								},
+								{
+									"key": "last_key",
+									"value": "%7B%22tenant_id%22%3A%20%22pizzahut%22%2C%20%22order_id%22%3A%20%2290356439-5cce-4676-98f2-6a14d3163f82%22%2C%20%22created_at%22%3A%20%222025-11-26T00%3A41%3A26.609449%2B00%3A00%22%7D",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get order by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ordersUrl}}/{{tenantId}}/orders/{{orderId}}",
+							"host": [
+								"{{ordersUrl}}"
+							],
+							"path": [
+								"{{tenantId}}",
+								"orders",
+								"{{orderId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code >= 200 && pm.response.code < 300) {",
+									"    const data = pm.response.json()",
+									"    pm.collectionVariables.set('orderId', data.order_id);",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"items\": [\n        {\n            \"product_id\": \"{{productId}}\",\n            \"quantity\": 3\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ordersUrl}}/{{tenantId}}/orders",
+							"host": [
+								"{{ordersUrl}}"
+							],
+							"path": [
+								"{{tenantId}}",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Start cooking order",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"cooking\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ordersUrl}}/{{tenantId}}/orders/{{orderId}}/status",
+							"host": [
+								"{{ordersUrl}}"
+							],
+							"path": [
+								"{{tenantId}}",
+								"orders",
+								"{{orderId}}",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Finish cooking order",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"wait_for_dispatcher\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ordersUrl}}/{{tenantId}}/orders/{{orderId}}/status",
+							"host": [
+								"{{ordersUrl}}"
+							],
+							"path": [
+								"{{tenantId}}",
+								"orders",
+								"{{orderId}}",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Start dispatching order",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"dispatching\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ordersUrl}}/{{tenantId}}/orders/{{orderId}}/status",
+							"host": [
+								"{{ordersUrl}}"
+							],
+							"path": [
+								"{{tenantId}}",
+								"orders",
+								"{{orderId}}",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Finish dispatching order",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"wait_for_deliverer\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ordersUrl}}/{{tenantId}}/orders/{{orderId}}/status",
+							"host": [
+								"{{ordersUrl}}"
+							],
+							"path": [
+								"{{tenantId}}",
+								"orders",
+								"{{orderId}}",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Start delivering order",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"delivering\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ordersUrl}}/{{tenantId}}/orders/{{orderId}}/status",
+							"host": [
+								"{{ordersUrl}}"
+							],
+							"path": [
+								"{{tenantId}}",
+								"orders",
+								"{{orderId}}",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Finish delivering order",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"complete\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ordersUrl}}/{{tenantId}}/orders/{{orderId}}/status",
+							"host": [
+								"{{ordersUrl}}"
+							],
+							"path": [
+								"{{tenantId}}",
+								"orders",
+								"{{orderId}}",
+								"status"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Catalog",
+			"item": [
+				{
+					"name": "Get status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{catalogUrl}}",
+							"host": [
+								"{{catalogUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{catalogUrl}}/{{tenantId}}/products",
+							"host": [
+								"{{catalogUrl}}"
+							],
+							"path": [
+								"{{tenantId}}",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get product by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{catalogUrl}}/{{tenantId}}/products/{{productId}}",
+							"host": [
+								"{{catalogUrl}}"
+							],
+							"path": [
+								"{{tenantId}}",
+								"products",
+								"{{productId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code >= 200 && pm.response.code < 300) {",
+									"    const data = pm.response.json()",
+									"    pm.collectionVariables.set('productId', data.product_id);",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Pizza XL\",\n    \"price\": 42,\n    \"image\": null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{catalogUrl}}/{{tenantId}}/products",
+							"host": [
+								"{{catalogUrl}}"
+							],
+							"path": [
+								"{{tenantId}}",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"New Pizza\",\n    \"price\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{catalogUrl}}/{{tenantId}}/products/{{productId}}",
+							"host": [
+								"{{catalogUrl}}"
+							],
+							"path": [
+								"{{tenantId}}",
+								"products",
+								"{{productId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{catalogUrl}}/{{tenantId}}/products/{{productId}}",
+							"host": [
+								"{{catalogUrl}}"
+							],
+							"path": [
+								"{{tenantId}}",
+								"products",
+								"{{productId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Analytics",
+			"item": [
+				{
+					"name": "Get status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{analyticsUrl}}",
+							"host": [
+								"{{analyticsUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get status counts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{analyticsUrl}}/{{tenantId}}/status-counts",
+							"host": [
+								"{{analyticsUrl}}"
+							],
+							"path": [
+								"{{tenantId}}",
+								"status-counts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get popular products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{analyticsUrl}}/{{tenantId}}/popular-products",
+							"host": [
+								"{{analyticsUrl}}"
+							],
+							"path": [
+								"{{tenantId}}",
+								"popular-products"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{sessionToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ordersUrl",
+			"value": ""
+		},
+		{
+			"key": "tenantId",
+			"value": ""
+		},
+		{
+			"key": "orderId",
+			"value": ""
+		},
+		{
+			"key": "usersUrl",
+			"value": ""
+		},
+		{
+			"key": "sessionToken",
+			"value": ""
+		},
+		{
+			"key": "catalogUrl",
+			"value": ""
+		},
+		{
+			"key": "productId",
+			"value": ""
+		},
+		{
+			"key": "userId",
+			"value": ""
+		},
+		{
+			"key": "analyticsUrl",
+			"value": ""
+		}
+	]
+}
