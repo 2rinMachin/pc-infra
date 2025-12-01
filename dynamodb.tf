@@ -93,22 +93,22 @@ resource "aws_dynamodb_table" "orders" {
   }
 
   attribute {
-    name = "client_id"
+    name = "client_id#created_at"
     type = "S"
   }
 
   attribute {
-    name = "cook_id"
+    name = "cook_id#created_at"
     type = "S"
   }
 
   attribute {
-    name = "dispatcher_id"
+    name = "dispatcher_id#created_at"
     type = "S"
   }
 
   attribute {
-    name = "driver_id"
+    name = "driver_id#created_at"
     type = "S"
   }
 
@@ -120,28 +120,28 @@ resource "aws_dynamodb_table" "orders" {
   global_secondary_index {
     name            = "tenant-client-idx"
     hash_key        = "tenant_id"
-    range_key       = "client_id"
+    range_key       = "client_id#created_at"
     projection_type = "ALL"
   }
 
   global_secondary_index {
     name            = "tenant-cook-idx"
     hash_key        = "tenant_id"
-    range_key       = "cook_id"
+    range_key       = "cook_id#created_at"
     projection_type = "ALL"
   }
 
   global_secondary_index {
     name            = "tenant-dispatcher-idx"
     hash_key        = "tenant_id"
-    range_key       = "dispatcher_id"
+    range_key       = "dispatcher_id#created_at"
     projection_type = "ALL"
   }
 
   global_secondary_index {
     name            = "tenant-driver-idx"
     hash_key        = "tenant_id"
-    range_key       = "driver_id"
+    range_key       = "driver_id#created_at"
     projection_type = "ALL"
   }
 
